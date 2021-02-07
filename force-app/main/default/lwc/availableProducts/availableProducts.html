@@ -1,0 +1,19 @@
+<template>
+    <div if:false={showSpinner}>
+        <lightning-layout multiple-rows='true'>
+            <lightning-layout-item class="slds-card" size='12'>
+                <div class="slds-card__body slds-m-around_medium">
+                    <template if:true={products.data}>
+                        <lightning-datatable
+                                key-field="Id"
+                                columns={productColumns}
+                                data={products.data}
+                                hide-checkbox-column='true'
+                                onrowaction={handleRowAction}
+                        ></lightning-datatable>
+                    </template>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+</template>
