@@ -1,0 +1,29 @@
+<template>
+    <lightning-layout multiple-rows='true'>
+        <lightning-layout-item class="slds-card" size='12'>
+            <div class="slds-card__header">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <lightning-icon icon-name="standard:catalog" title="Catalog"></lightning-icon>
+                    </div>
+                    <div class="slds-media__body">
+                        <h2 class="slds-card__header-title">
+                            Available Products
+                        </h2>
+                    </div>
+                </header>
+            </div>
+            <div class="slds-card__body slds-m-around_medium">
+                <template if:true={pricebookEntries.data}>
+                    <lightning-datatable
+                            columns={pricebookEntryColumns}
+                            data={pricebookEntries.data}
+                            hide-checkbox-column='true'
+                            key-field="Product2Id"
+                            onrowaction={handleRowAction}
+                    ></lightning-datatable>
+                </template>
+            </div>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>
