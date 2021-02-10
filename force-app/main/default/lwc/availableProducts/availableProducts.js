@@ -1,9 +1,10 @@
 import {LightningElement, api, wire} from 'lwc';
-import getProducts from '@salesforce/apex/AvailableProductsController.getProducts';
+import getPricebookEntries from '@salesforce/apex/AvailableProductsController.getPricebookEntries';
+import pubsub from 'c/pubsub';
 
-const PRODUCT_COLUMNS = [
+const PRICEBOOK_ENTRY_COLUMNS = [
     { label: 'Name', fieldName: 'Name' },
-    { label: 'List Price', fieldName: 'UnitPrice' },
+    { label: 'List Price', fieldName: 'UnitPrice', type: 'currency' },
     {
         type: 'button',
         initialWidth: 75,
@@ -17,16 +18,16 @@ const PRODUCT_COLUMNS = [
 
 export default class AvailableProducts extends LightningElement {
     @api recordId;
-    productColumns = PRODUCT_COLUMNS;
+    pricebookEntryColumns = PRICEBOOK_ENTRY_COLUMNS;
 
-    @wire(getProducts, {orderId: '$recordId'})
-    products;
+    @wire(getPricebookEntries, {orderId: '$recordId'})
+    pricebookEntries;
 
     handleRowAction(event) {
-        const productId = event.detail.row.Id;
-        const productAdded = new CustomEvent('productAdded', {
-            detail: {productId}
-        });
-        this.dispatchEvent(productAdded);
+        const product = event.detail.row;
+        let message = {
+            "message" : JSON.stringify(product)
+        }
+        pubsub.fire('productAdded', message );
     }
 }
