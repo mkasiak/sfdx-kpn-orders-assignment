@@ -1,3 +1,8 @@
+/**
+ * Pub Sub Library to handle LWC events
+ * Source: https://gist.github.com/JitendraZaa/ffc43606fafb682365ec28177962fe81
+ */
+
 var callbacks = {};
 
 /**
